@@ -1,0 +1,14 @@
+{
+	
+	"chrome": {
+		"default": "latest",
+		"versions": {
+			"latest": {
+				"image": ["C:/chromedriver/chromedriver.exe"],
+				"port": "4444",
+				"path": "/",
+				"tmpfs": {"/tmp":"size=512m"}
+			}
+		}
+	}
+}
