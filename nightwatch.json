@@ -34,6 +34,9 @@
         "enabled" : false,
         "path" : ""
       },
+      "globals": {
+        "waitForConditionTimeout": 10000
+      },
       "desiredCapabilities" : {
         "browserName" : "chrome",
         "javascriptEnabled" : true,
