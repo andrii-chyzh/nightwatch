@@ -32,14 +32,13 @@ module.exports = {
             .setValue('@topicField', 'One two three four five six seven eight nine zero One two three four five six seven eight nine zero ' +
                 'One two three four five six seven eight nine zero One two three four five six seven eight nine zero One two three four five six seven five six seven five si')
             .expect.element('@topicErrorValidation').to.be.visible;
-       createOrderPage
-             .clearValue('#order_name');
     },
 
-    'Проверка поля "Topic" на ввод максимально дупустимого значения (255 символов)': (browser) => {
+    'Проверка поля "Topic" на отсутсвие ошибки при вводе валидного значения': (browser) => {
         let createOrderPage = browser.page.createOrderPage();
 
         createOrderPage
+            .clearValue('@topicField')
             .setValue('@topicField', 'One two three four five six seven eight nine zero One two three four five six seven eight nine zero ' +
                 'One two three four five six seven eight nine zero One two three four five six seven eight nine zero One two three four five six seven five six seven five')
             .waitForElementNotPresent('@topicErrorValidation', 1000);
@@ -49,7 +48,7 @@ module.exports = {
         let createOrderPage = browser.page.createOrderPage();
 
         createOrderPage
-            .clearValue('#order_product_pages')
+            .clearValue('@numberOfPagesInput')
             .expect.element('@numberOfPagesErrorEmpty').to.be.visible.before(2000);
     },
 
@@ -57,7 +56,7 @@ module.exports = {
         let createOrderPage = browser.page.createOrderPage();
 
         createOrderPage
-            .setValue('#order_product_pages', '151')
+            .setValue('@numberOfPagesInput', '151')
             .expect.element('@numberOfPagesErrorMax').to.be.visible.before(2000);
     },
 
@@ -65,33 +64,39 @@ module.exports = {
         let createOrderPage = browser.page.createOrderPage();
 
         createOrderPage
-            .clearValue('#order_product_pages')
-            .setValue('#order_product_pages', '#!?')
+            .clearValue('@numberOfPagesInput')
+            .setValue('@numberOfPagesInput', '#!?')
             .expect.element('@numberOfPagesErrorSymbols').to.be.visible.before(2000);
-        createOrderPage
-            .clearValue('#order_product_pages');
     },
 
     'Проверка поля "Number of pages" на ввод отрицательного значения': (browser) => {
         let createOrderPage = browser.page.createOrderPage();
 
         createOrderPage
-            .setValue('#order_product_pages', '-2')
+            .clearValue('@numberOfPagesInput')
+            .setValue('@numberOfPagesInput', '-2')
             .expect.element('@numberOfPagesErrorMinus').to.be.visible.before(2000);
-        createOrderPage
-            .clearValue('#order_product_pages');
     },
 
     'Проверка поля "Number of pages" на ввод кирилици': (browser) => {
         let createOrderPage = browser.page.createOrderPage();
 
         createOrderPage
-            .setValue('#order_product_pages', 'abc')
+            .clearValue('@numberOfPagesInput')
+            .setValue('@numberOfPagesInput', 'abc')
             .expect.element('@numberOfPagesErrorSymbols').to.be.visible.before(2000);
+    },
+
+    'Проверка поля "Number of pages" на отсутствие ошибки валидации при вводе валидного значения': (browser) => {
+        let createOrderPage = browser.page.createOrderPage();
+
         createOrderPage
-            .clearValue('#order_product_pages')
-            .setValue('#order_product_pages', '2')
-            .expect.element('#order_product_pages').to.have.value.that.equals('2').before(2000);
+            .clearValue('@numberOfPagesInput')
+            .setValue('@numberOfPagesInput', '2')
+            .expect.element('@numberOfPagesInput').to.have.value.that.equals('2').before(2000);
+        createOrderPage
+            .waitForElementNotPresent('@numberOfPagesErrorSymbols', 1000);
+
     },
 
 
@@ -137,10 +142,17 @@ module.exports = {
             .clearValue('@numberOfCited')
             .setValue('@numberOfCited', 'abc')
             .expect.element('@numberOfCitedEmpty').to.be.visible.before(2000);
+    },
+
+    'Проверка поля "Number of cited resources" на отсутствие ошибки валидации при вводе валидного значения': (browser) => {
+        let createOrderPage = browser.page.createOrderPage();
+
         createOrderPage
             .clearValue('@numberOfCited')
             .setValue('@numberOfCited', '2')
-            .expect.element('#order_product_sources').to.have.value.that.equals('2');
+            .expect.element('@numberOfCited').to.have.value.that.equals('2');
+        createOrderPage
+            .waitForElementNotPresent('@numberOfCitedEmpty', 1000);
     },
 
     'Проверка поля "Deadline Date" на ввод даты которая уже прошла': (browser) => {
